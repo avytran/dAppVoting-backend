@@ -19,19 +19,26 @@ contract Voting {
     uint256 public endTime;
     event Voted(address indexed voter, uint256 candidateId, string candidateName, uint256 timestamp);
     event CandidateAdded(uint256 id, string name, uint256 timestamp);
+    event CandidateDeleted(uint256 id, uint256 timestamp);
+    event VotingPeriodUpdated(uint256 startTime, uint256 endTime);
 
     constructor(uint256 _startTime, uint256 _endTime) {
         admin = msg.sender;
         startTime = _startTime;
         endTime = _endTime;
-        addCandidate("Marcus Thorne");
-        addCandidate("Elena Vance");
+        _internalAddCandidate("Marcus Thorne");
+        _internalAddCandidate("Elena Vance");
+    }
+
+    function _internalAddCandidate(string memory _name) internal {
+        candidatesCount++;
+        candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
+        emit CandidateAdded(candidatesCount, _name, block.timestamp);
     }
 
     function addCandidate(string memory _name) public {
         require(msg.sender == admin, "Only admin can add candidates");
-        candidatesCount++;
-        candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
+        _internalAddCandidate(_name);
     }
 
     function deleteCandidate(uint256 _candidateId) public {
@@ -39,13 +46,16 @@ contract Voting {
         require(_candidateId > 0 && _candidateId <= candidatesCount, "Invalid ID");
         
         isDeleted[_candidateId] = true;
+        emit CandidateDeleted(_candidateId, block.timestamp);
     }
 
     function setVotingPeriod(uint256 _startTime, uint256 _endTime) public {
         require(msg.sender == admin, "Only admin can update");
         require(_endTime > _startTime, "End time must be after start time");
+        
         startTime = _startTime;
         endTime = _endTime;
+        emit VotingPeriodUpdated(_startTime, _endTime);
     }
 
     function vote(uint256 _candidateId) public {
