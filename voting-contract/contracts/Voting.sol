@@ -24,8 +24,8 @@ contract Voting {
         admin = msg.sender;
         startTime = _startTime;
         endTime = _endTime;
-        // _addCandidate("Marcus Thorne");
-        // _addCandidate("Elena Vance");
+        addCandidate("Marcus Thorne");
+        addCandidate("Elena Vance");
     }
 
     function addCandidate(string memory _name) public {
