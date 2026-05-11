@@ -24,6 +24,25 @@ contract("Voting System Full Integration Test", (accounts) => {
     );
   });
 
+  it("should initialize correct number of candidates", async () => {
+    // Lấy số lượng ban đầu (thường là 0)
+    const initialCount = await voting.candidatesCount();
+    
+    await voting.addCandidate("Marcus Thorne", { from: admin });
+    await voting.addCandidate("Elena Vance", { from: admin });
+    
+    const finalCount = await voting.candidatesCount();
+    assert.equal(finalCount.toNumber(), initialCount.toNumber() + 2);
+  });
+
+  it("should verify candidate details", async () => {
+    await voting.addCandidate("Marcus Thorne", { from: admin });
+    const candidate = await voting.candidates(1);
+    assert.equal(candidate.id.toNumber(), 1);
+    assert.equal(candidate.name, "Marcus Thorne");
+    assert.equal(candidate.voteCount.toNumber(), 0);
+  });
+
   it("should only allow voting within the set time window", async () => {
     await voting.addCandidate("Elena Vance", { from: admin });
 
@@ -33,7 +52,6 @@ contract("Voting System Full Integration Test", (accounts) => {
     );
 
     await time.increase(time.duration.minutes(6));
-
     await voting.vote(1, { from: voter1 });
 
     await time.increase(time.duration.hours(2));
@@ -48,7 +66,6 @@ contract("Voting System Full Integration Test", (accounts) => {
     await time.increase(time.duration.minutes(6));
 
     await voting.vote(1, { from: voter1 });
-    
     const hasVoted = await voting.hasVoted(voter1);
     assert.isTrue(hasVoted);
 
@@ -68,7 +85,6 @@ contract("Voting System Full Integration Test", (accounts) => {
     await time.increase(time.duration.minutes(6));
 
     const receipt = await voting.vote(1, { from: voter2 });
-
     const candidate = await voting.candidates(1);
     assert.equal(candidate.voteCount.toNumber(), 1);
 
@@ -83,7 +99,6 @@ contract("Voting System Full Integration Test", (accounts) => {
     await time.increase(time.duration.minutes(6));
 
     const tx = await voting.vote(1, { from: voter3 });
-
     assert.exists(tx.tx);
     assert.exists(tx.receipt.blockNumber);
     
