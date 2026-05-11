@@ -18,25 +18,13 @@ Thư mục này chứa toàn bộ mã nguồn Smart Contract, các script triể
    npm install
    ```
 
-## 🧹 Chuẩn bị và chạy local
+## 🧹 Chuẩn bị
 
 Trước khi deploy, thực hiện cleanup và compile:
 
 ```bash
 npx hardhat clean
 npx hardhat compile
-```
-
-Tiếp theo, khởi chạy node Hardhat local:
-
-```bash
-npx hardhat node
-```
-
-Và trong terminal mới, deploy contract:
-
-```bash
-npx hardhat run scripts/deploy.js --network localhost
 ```
 
 ## 🚀 Chạy môi trường Local với Hardhat
