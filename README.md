@@ -102,3 +102,11 @@ Trước khi chạy test, đảm bảo bạn đã cài đặt dependencies.
 - Giữ terminal Hardhat node chạy liên tục khi bạn deploy contract và tương tác từ frontend
 - Sử dụng địa chỉ contract được hiển thị sau khi deploy để cấu hình trên frontend
 - Nếu cần reset mạng, dừng `npx hardhat node` và chạy lại, sau đó deploy lại contract
+
+## Nhóm sinh viên thực hiện
+Nhóm E:
+1.  Nguyễn Mạc Gia Huy	    MSSV: 31231025016
+2.	Nguyễn Nguyên Khuyến 	MSSV: 31231026626
+3.	Nguyễn Thị Thiên Nhi	MSSV: 31231023551
+4.	Lê Vũ Uyên Phương	    MSSV: 31231025809
+5.	Trần Anh Vy			    MSSV: 31231020502
