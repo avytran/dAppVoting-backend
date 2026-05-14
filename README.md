@@ -1,6 +1,14 @@
-# ⚙️ VoteChain Backend - Smart Contracts & Blockchain Setup
+# ⚙️ dAppVoting Backend - Smart Contracts & Blockchain Setup
 
-Thư mục này chứa toàn bộ mã nguồn Smart Contract, các script triển khai và cấu hình môi trường blockchain cục bộ (Local Blockchain) cho dự án VoteChain.
+Thư mục này chứa toàn bộ mã nguồn Smart Contract, các script triển khai và cấu hình môi trường blockchain cục bộ (Local Blockchain) cho dự án dAppVoting. 
+
+Cụ thể bao gồm:
+- **Smart Contract** (`contracts/Voting.sol`): Hợp đồng thông minh điều khiển toàn bộ logic bỏ phiếu
+- **Scripts triển khai** (`scripts/deploy.js`): Script tự động hóa việc deploy contract lên blockchain
+- **Cấu hình Hardhat** (`hardhat.config.js`): Thiết lập môi trường Hardhat cho phát triển và test
+- **Test Suite** (`test/`): Các bài test kiểm tra tính đúng đắn của Smart Contract
+- **ABI & Build Artifacts** (`artifacts/`, `src/abis/`): Các file cần thiết để frontend tương tác với contract
+- **Modules Ignition** (`ignition/modules/`): Cấu hình triển khai nâng cao
 
 ## 🛠 Yêu cầu hệ thống
 
@@ -74,19 +82,20 @@ Sau khi hoàn tất, bạn sẽ nhận được địa chỉ contract (ví dụ:
 
 Trước khi chạy test, đảm bảo bạn đã cài đặt dependencies.
 
-- Để chạy test trong môi trường mặc định của Hardhat:
+- Để chạy Truffle develop và thực thi test:
 
     ```bash
-    npx hardhat test
+    truffle develop
+    > test
     ```
 
-- Nếu bạn muốn xem báo cáo gas cho các test:
+- Hoặc chạy test trực tiếp mà không cần vào Truffle shell:
 
     ```bash
-    REPORT_GAS=true npx hardhat test
+    truffle test
     ```
 
-> Nếu cần chạy test trên mạng local đang hoạt động, hãy chắc chắn `npx hardhat node` vẫn đang chạy và cấu hình `network` phù hợp ở file `hardhat.config.js`.
+> Lưu ý: `truffle develop` khởi tạo một blockchain local tự động, trong khi `truffle test` sử dụng blockchain tạm thời cho mỗi lần test.
 
 ## 📌 Gợi ý sử dụng
 
